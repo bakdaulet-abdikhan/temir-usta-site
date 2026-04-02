@@ -118,7 +118,6 @@ const luxGates = [
     { id: 'L3-21', image: driveImg('1io9TNlEjYXaN_070xWcTk6xRxOY-3G4o') },
     { id: 'L3-22', image: driveImg('1pz_h1b5b4YhIavmpuiMa8ek3Mp6pbOfV') },
     { id: 'L3-23', image: driveImg('1qddLniC7zX6dJXkliSLMNBsIUbsd48Xz') },
-    { id: 'L3-24', image: driveImg('1oUdcvanowaVy8jhrHP05vo6SIRkVra7I') },
     { id: 'L3-25', image: driveImg('1Mby_uKMwErQqflN3kKfUfEnNC24rJRPg') },
     { id: 'L3-26', image: driveImg('1yLoRZxNc860aHn4z0QEO19LiQRhwAXtw') },
     { id: 'L3-27', image: driveImg('11RX-kEKkNozoGukUAmTonC4NwZNQyuw3') },
