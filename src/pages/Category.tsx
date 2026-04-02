@@ -12,7 +12,7 @@ const tierOrder = ['standard', 'premium', 'lux'];
 
 // Helper to convert Google Drive file IDs to thumbnail URLs
 function driveImg(fileId: string) {
-    return `https://drive.google.com/thumbnail?id=${fileId}&sz=w1200`;
+    return `https://drive.google.com/thumbnail?id=${fileId}&sz=w600`;
 }
 
 // Retry handler for failed Drive images — appends cache-busting param
