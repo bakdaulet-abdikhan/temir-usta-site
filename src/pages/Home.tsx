@@ -51,27 +51,27 @@ const tiers = [
 ];
 
 
-const driveImg = (id: string) => `https://drive.google.com/thumbnail?id=${id}&sz=w800`;
+const r2Img = (id: string) => `https://pub-45c64cad9ebf4f4f8e48e787f035d2f3.r2.dev/${id.split("-")[0]}/${id}.webp`;
 
 const galleryImages = [
     // Standard
-    { id: 'S1-01', url: driveImg('1ID3sKVWap4Biv0h6ZfFBFTkcKV4h1X0u') },
-    { id: 'S1-05', url: driveImg('1tZSrdL5PwPxhXeWLSxEhtV18ozHB8GWj') },
-    { id: 'S1-10', url: driveImg('1CnowBZ1vduRoagfnW7NoGxK7kYMjOMfG') },
-    { id: 'S1-14', url: driveImg('1y0aAAGpb-LoR532rTsRdAv0LR2A04OOF') },
+    { id: 'S1-01', url: r2Img('S1-01') },
+    { id: 'S1-05', url: r2Img('S1-05') },
+    { id: 'S1-10', url: r2Img('S1-10') },
+    { id: 'S1-14', url: r2Img('S1-14') },
     // Premium
-    { id: 'P2-08', url: driveImg('1BqY6_NfXwy5lJ_-RCFGxDxGzFhGMTyG9') },
-    { id: 'P2-14', url: driveImg('1cMdWTX1HGfWIsU6qvb7oMwykSjb8Devd') },
-    { id: 'P2-20', url: driveImg('1Q8CYo7jvLfss8fLhdb0X6GjOfBrK0F84') },
-    { id: 'P2-30', url: driveImg('1wua14MVSQb2gy5qPt6pKYL6Cc2nSkbBi') },
-    { id: 'P2-38', url: driveImg('1ExMFTTgsONqLYB66w6kS3ZYsTvagz48I') },
+    { id: 'P2-08', url: r2Img('P2-08') },
+    { id: 'P2-14', url: r2Img('P2-14') },
+    { id: 'P2-20', url: r2Img('P2-20') },
+    { id: 'P2-30', url: r2Img('P2-30') },
+    { id: 'P2-38', url: r2Img('P2-38') },
     // Lux
-    { id: 'L3-20', url: driveImg('1s8vWgKqWZ-6MzWameVQAY5fbDwC-hsDG') },
-    { id: 'L3-35', url: driveImg('1RAeJSJQeKosdlZK3ZS7gAf0c5E8Det-2') },
-    { id: 'L3-45', url: driveImg('1fHyQHzMJt2riqzbq7ZaPFrQsRDCtLzEe') },
-    { id: 'L3-55', url: driveImg('1B55dFzo4LzXepjp0asUNZF5ABv4K6Cfl') },
-    { id: 'L3-63', url: driveImg('1Tlp2dJr6Ds21YJmTGj5mxt2sN9heiPuc') },
-    { id: 'L3-69', url: driveImg('1SeyNgV8twteDiLwxjJsGq5nAeUFlETNL') },
+    { id: 'L3-20', url: r2Img('L3-20') },
+    { id: 'L3-35', url: r2Img('L3-35') },
+    { id: 'L3-45', url: r2Img('L3-45') },
+    { id: 'L3-55', url: r2Img('L3-55') },
+    { id: 'L3-63', url: r2Img('L3-63') },
+    { id: 'L3-69', url: r2Img('L3-69') },
 ];
 
 const stats = [
