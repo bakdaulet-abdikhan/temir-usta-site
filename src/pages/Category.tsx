@@ -42,7 +42,6 @@ const standardGates = [
     { id: 'S1-13', image: r2Img('S1-13') },
     { id: 'S1-14', image: r2Img('S1-14') },
     { id: 'S1-15', image: r2Img('S1-15') },
-    { id: 'S1-16', image: r2Img('S1-16') },
 ];
 
 // Premium gates (44 items) — P2-xx
