@@ -1,16 +1,47 @@
 import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { useLang } from '../i18n/LanguageContext';
+import { translations } from '../i18n/translations';
 
 export default function Header() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const { lang, setLang, langPath } = useLang();
+    const tx = translations[lang].nav;
 
     useEffect(() => {
         const handleScroll = () => setIsScrolled(window.scrollY > 60);
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
+
+    const langBtnBase: React.CSSProperties = {
+        background: 'none',
+        border: 'none',
+        cursor: 'pointer',
+        fontSize: '0.8rem',
+        fontWeight: 700,
+        letterSpacing: '1px',
+        padding: '0.25rem 0.4rem',
+        borderRadius: '4px',
+        transition: 'color 0.2s',
+        fontFamily: 'var(--font-sans)',
+    };
+
+    const LangSwitcher = ({ color }: { color: string }) => (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
+            <button
+                onClick={() => setLang('kz')}
+                style={{ ...langBtnBase, color: lang === 'kz' ? color : 'rgba(255,255,255,0.35)' }}
+            >KZ</button>
+            <span style={{ color: 'rgba(255,255,255,0.25)', fontSize: '0.75rem' }}>|</span>
+            <button
+                onClick={() => setLang('ru')}
+                style={{ ...langBtnBase, color: lang === 'ru' ? color : 'rgba(255,255,255,0.35)' }}
+            >RU</button>
+        </div>
+    );
 
     return (
         <header style={{
@@ -32,39 +63,51 @@ export default function Header() {
                 alignItems: 'center',
                 height: '80px',
             }}>
-                <Link to="/" style={{ display: 'flex', alignItems: 'center', opacity: 1 }}>
+                <Link to={langPath('/')} style={{ display: 'flex', alignItems: 'center', opacity: 1 }}>
                     <span style={{ fontFamily: 'var(--font-serif)', fontSize: '1.35rem', fontWeight: 700, letterSpacing: '0.5px', color: '#fff' }}>
                         TEMIR USTA
                     </span>
                 </Link>
 
-                {/* Desktop Nav */}
+                {/* Desktop Nav — hidden on mobile via .desktop-nav CSS */}
                 <nav className="desktop-nav" style={{ gap: '2rem' }}>
-                    <Link to="/" style={{ fontWeight: 500, fontSize: '0.9rem', letterSpacing: '0.3px', color: 'rgba(255,255,255,0.85)', transition: 'color 0.2s' }}
+                    <Link to={langPath('/')}
+                        style={{ fontWeight: 500, fontSize: '0.9rem', letterSpacing: '0.3px', color: 'rgba(255,255,255,0.85)', transition: 'color 0.2s' }}
                         onMouseEnter={e => (e.currentTarget.style.color = '#fff')}
                         onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.85)')}
-                    >Басты бет</Link>
-                    <a href="/#catalog" style={{ fontWeight: 500, fontSize: '0.9rem', letterSpacing: '0.3px', color: 'rgba(255,255,255,0.85)', transition: 'color 0.2s' }}
+                    >{tx.home}</Link>
+                    <a href={langPath('/') + '#catalog'}
+                        style={{ fontWeight: 500, fontSize: '0.9rem', letterSpacing: '0.3px', color: 'rgba(255,255,255,0.85)', transition: 'color 0.2s' }}
                         onMouseEnter={e => (e.currentTarget.style.color = '#fff')}
                         onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.85)')}
-                    >Каталог</a>
-                    <a href="/#about" style={{ fontWeight: 500, fontSize: '0.9rem', letterSpacing: '0.3px', color: 'rgba(255,255,255,0.85)', transition: 'color 0.2s' }}
+                    >{tx.catalog}</a>
+                    <a href={langPath('/') + '#about'}
+                        style={{ fontWeight: 500, fontSize: '0.9rem', letterSpacing: '0.3px', color: 'rgba(255,255,255,0.85)', transition: 'color 0.2s' }}
                         onMouseEnter={e => (e.currentTarget.style.color = '#fff')}
                         onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.85)')}
-                    >Біз туралы</a>
-                    <a href="/#catalog" className="btn-primary" style={{ padding: '0.6rem 1.4rem', fontSize: '0.875rem' }}>
-                        Каталогты көру
+                    >{tx.about}</a>
+
+                    {/* Language switcher — one instance, desktop only */}
+                    <LangSwitcher color="#fff" />
+
+                    <a href={langPath('/') + '#catalog'} className="btn-primary" style={{ padding: '0.6rem 1.4rem', fontSize: '0.875rem' }}>
+                        {tx.viewCatalog}
                     </a>
                 </nav>
 
-                {/* Mobile Nav Toggle */}
-                <button
-                    className="mobile-nav-toggle"
-                    style={{ color: '#fff' }}
-                    onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                >
-                    {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-                </button>
+                {/* Mobile right-side group: lang switcher + hamburger, always together */}
+                <div className="mobile-right-group">
+                    <div className="lang-switcher-mobile-only">
+                        <LangSwitcher color="#fff" />
+                    </div>
+                    <button
+                        className="mobile-nav-toggle"
+                        style={{ color: '#fff' }}
+                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                    >
+                        {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                    </button>
+                </div>
             </div>
 
             {/* Mobile Menu */}
@@ -85,9 +128,9 @@ export default function Header() {
                     animation: 'fadeIn 0.25s ease',
                 }}>
                     {[
-                        { label: 'Басты бет', href: '/', isLink: true },
-                        { label: 'Каталог', href: '/#catalog', isLink: false },
-                        { label: 'Біз туралы', href: '/#about', isLink: false },
+                        { label: tx.home, href: langPath('/'), isLink: true },
+                        { label: tx.catalog, href: langPath('/') + '#catalog', isLink: false },
+                        { label: tx.about, href: langPath('/') + '#about', isLink: false },
                     ].map(({ label, href, isLink }) => {
                         const style: React.CSSProperties = {
                             fontWeight: 500, fontSize: '1.05rem',
@@ -100,8 +143,14 @@ export default function Header() {
                             ? <Link key={label} to={href} onClick={() => setMobileMenuOpen(false)} style={style}>{label}</Link>
                             : <a key={label} href={href} onClick={() => setMobileMenuOpen(false)} style={style}>{label}</a>;
                     })}
-                    <a href="/#catalog" onClick={() => setMobileMenuOpen(false)} className="btn-primary" style={{ textAlign: 'center', marginTop: '1.5rem', borderRadius: '999px' }}>
-                        Каталогты көру
+
+                    {/* Language switcher inside mobile menu */}
+                    <div style={{ padding: '1rem 0', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
+                        <LangSwitcher color="#fff" />
+                    </div>
+
+                    <a href={langPath('/') + '#catalog'} onClick={() => setMobileMenuOpen(false)} className="btn-primary" style={{ textAlign: 'center', marginTop: '1.5rem', borderRadius: '999px' }}>
+                        {tx.viewCatalog}
                     </a>
                 </div>
             )}

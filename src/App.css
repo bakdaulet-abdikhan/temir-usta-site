@@ -9,6 +9,17 @@
   display: none !important;
 }
 
+.mobile-right-group {
+  display: none !important;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lang-switcher-mobile-only {
+  display: flex;
+  align-items: center;
+}
+
 @media (max-width: 768px) {
   .desktop-nav {
     display: none !important;
@@ -16,6 +27,10 @@
 
   .mobile-nav-toggle {
     display: block !important;
+  }
+
+  .mobile-right-group {
+    display: flex !important;
   }
 }
 

@@ -1,22 +1,20 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Phone } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
+import { useLang } from '../i18n/LanguageContext';
+import { translations } from '../i18n/translations';
 
-const locations = [
-    {
-        city: 'Алматы',
-        address: 'Алматы-Бішкек трассасы, 122Б/2, Береке базары, Сектор Т, 11 қатар',
-        mapSrc: 'https://maps.google.com/maps?q=43.221685,76.625391&z=15&output=embed',
-    },
-    {
-        city: 'Түркістан',
-        address: 'Тәуелсіздіктің 10 жылдығы көшесі, Саяхат',
-        mapSrc: 'https://maps.google.com/maps?q=43.3102,68.240784&z=15&output=embed',
-    },
+const MAP_SRCS = [
+    'https://maps.google.com/maps?q=43.221685,76.625391&z=15&output=embed',
+    'https://maps.google.com/maps?q=43.3102,68.240784&z=15&output=embed',
 ];
 
 export default function Footer() {
     const location = useLocation();
     const isCategoryPage = location.pathname.startsWith('/catalog/');
+    const { lang, langPath } = useLang();
+    const tx = translations[lang].footer;
+    const locs = translations[lang].locations;
 
     return (
         <footer style={{ backgroundColor: 'var(--color-bg-dark)', color: 'var(--color-text-light)', overflow: 'hidden' }}>
@@ -27,25 +25,25 @@ export default function Footer() {
                     <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '2rem' }}>
                         <div style={{ maxWidth: '520px' }}>
                             <h2 style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)', lineHeight: 1.15, color: '#fff', letterSpacing: '-0.02em', marginBottom: '0.75rem' }}>
-                                Қақпаңызды бүгін<br />
-                                <span style={{ color: 'var(--color-accent)' }}>тапсырыс беріңіз</span>
+                                {tx.ctaTitle}<br />
+                                <span style={{ color: 'var(--color-accent)' }}>{tx.ctaTitleAccent}</span>
                             </h2>
                             <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: '1rem', lineHeight: 1.6 }}>
-                                Дайын шешім немесе жеке дизайн — мамандарымыз сізге ең жақсысын таңдауға көмектеседі.
+                                {tx.ctaSubtitle}
                             </p>
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '0.75rem' }}>
-                            <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: '0.85rem', lineHeight: 1.5 }}>
-                                Байланысу оңай — бір хабарлама<br />жіберсеңіз болды
+                            <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: '0.85rem', lineHeight: 1.5, whiteSpace: 'pre-line' }}>
+                                {tx.ctaNote}
                             </p>
                             <a
-                                href={`https://wa.me/77056401566?text=${encodeURIComponent('Сәлеметсіз бе! Мен Temir Usta-дан қақпа тапсырыс бергім келеді. Толығырақ ақпарат бере аласыз ба?')}`}
+                                href={`https://wa.me/77056401566?text=${encodeURIComponent(tx.waMsg)}`}
                                 className="btn-primary"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 style={{ borderRadius: '999px', paddingLeft: '1.75rem', paddingRight: '1.75rem' }}
                             >
-                                Тапсырыс беру →
+                                {tx.ctaBtn}
                             </a>
                         </div>
                     </div>
@@ -65,7 +63,7 @@ export default function Footer() {
                                 </span>
                             </div>
                             <p style={{ color: 'rgba(255,255,255,0.5)', lineHeight: 1.7, fontSize: '0.9rem', marginBottom: '1.5rem' }}>
-                                15 жылдық тәжірибесі бар сенімді қақпа өндірушісі. Қазақстан бойынша жеткізу және орнату.
+                                {tx.brandDesc}
                             </p>
                             <a href="https://www.instagram.com/temir_usta_kz" target="_blank" rel="noopener noreferrer"
                                 style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: 'rgba(255,255,255,0.6)', fontSize: '0.875rem', transition: 'color 0.25s', opacity: 1 }}
@@ -78,17 +76,10 @@ export default function Footer() {
 
                         {/* Navigation */}
                         <div>
-                            <h4 style={{ fontSize: '0.8rem', fontFamily: 'var(--font-sans)', fontWeight: 600, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)', marginBottom: '1.25rem' }}>Навигация</h4>
+                            <h4 style={{ fontSize: '0.8rem', fontFamily: 'var(--font-sans)', fontWeight: 600, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)', marginBottom: '1.25rem' }}>{tx.navTitle}</h4>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
-                                {[
-                                    { label: 'Басты бет', href: '/' },
-                                    { label: 'Каталог', href: '/#catalog' },
-                                    { label: 'Біз туралы', href: '/#about' },
-                                    { label: 'Standard', href: '/catalog/standard' },
-                                    { label: 'Premium', href: '/catalog/premium' },
-                                    { label: 'Lux', href: '/catalog/lux' },
-                                ].map((item) => (
-                                    <Link key={item.label} to={item.href}
+                                {tx.navItems.map((item) => (
+                                    <Link key={item.label} to={langPath(item.href)}
                                         style={{ color: 'rgba(255,255,255,0.55)', fontSize: '0.9rem', transition: 'color 0.2s', opacity: 1 }}
                                         onMouseEnter={e => (e.currentTarget.style.color = '#fff')}
                                         onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.55)')}
@@ -99,7 +90,7 @@ export default function Footer() {
 
                         {/* Contact */}
                         <div>
-                            <h4 style={{ fontSize: '0.8rem', fontFamily: 'var(--font-sans)', fontWeight: 600, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)', marginBottom: '1.25rem' }}>Байланыс</h4>
+                            <h4 style={{ fontSize: '0.8rem', fontFamily: 'var(--font-sans)', fontWeight: 600, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)', marginBottom: '1.25rem' }}>{tx.contactTitle}</h4>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                                 <a href="tel:+77056401566" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'rgba(255,255,255,0.55)', fontSize: '0.9rem', transition: 'color 0.2s', opacity: 1 }}
                                     onMouseEnter={e => (e.currentTarget.style.color = '#fff')}
@@ -107,7 +98,7 @@ export default function Footer() {
                                 >
                                     <Phone size={15} /> +7 (705) 640-15-66
                                 </a>
-                                <a href={`https://wa.me/77056401566`} target="_blank" rel="noopener noreferrer"
+                                <a href="https://wa.me/77056401566" target="_blank" rel="noopener noreferrer"
                                     style={{ display: 'inline-flex', alignItems: 'center', gap: '0.6rem', color: 'rgba(255,255,255,0.55)', fontSize: '0.9rem', transition: 'color 0.2s', opacity: 1 }}
                                     onMouseEnter={e => (e.currentTarget.style.color = '#25D366')}
                                     onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.55)')}
@@ -124,9 +115,9 @@ export default function Footer() {
 
             {/* ── Maps with paired addresses ── */}
             <div className="container" style={{ paddingBottom: '4rem' }}>
-                <h4 style={{ fontSize: '0.8rem', fontFamily: 'var(--font-sans)', fontWeight: 600, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)', marginBottom: '1.5rem' }}>Мекен-жай</h4>
+                <h4 style={{ fontSize: '0.8rem', fontFamily: 'var(--font-sans)', fontWeight: 600, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)', marginBottom: '1.5rem' }}>{tx.addressTitle}</h4>
                 <div className="locations-grid">
-                    {locations.map((loc) => (
+                    {locs.map((loc, i) => (
                         <div key={loc.city}>
                             <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem', marginBottom: '0.75rem' }}>
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: '2px' }}><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -136,7 +127,7 @@ export default function Footer() {
                                 </div>
                             </div>
                             <div style={{ borderRadius: '14px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.08)' }}>
-                                <iframe src={loc.mapSrc}
+                                <iframe src={MAP_SRCS[i]}
                                     width="100%" height="240" style={{ border: 0, display: 'block' }}
                                     allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"
                                     title={`Temir Usta — ${loc.city}`} />
@@ -147,23 +138,27 @@ export default function Footer() {
             </div>
 
             {/* ── Huge Brand Name ── */}
-            <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', overflow: 'hidden', position: 'relative', padding: '1rem 0 0' }}>
-                <div style={{
-                    fontSize: 'clamp(3rem, 9vw, 11rem)',
-                    fontFamily: 'var(--font-serif)',
-                    fontWeight: 700,
-                    letterSpacing: '-0.02em',
-                    textAlign: 'center',
-                    lineHeight: 0.85,
-                    whiteSpace: 'nowrap',
-                    background: 'linear-gradient(to bottom, rgba(255,255,255,0.12), rgba(255,255,255,0.02))',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text',
-                    userSelect: 'none',
-                    pointerEvents: 'none',
-                }}>
-                    TEMIR USTA
+            <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', overflow: 'hidden' }}>
+                <div className="container">
+                    <p style={{
+                        margin: 0,
+                        fontSize: 'min(16vw, 200px)',
+                        fontFamily: 'var(--font-serif)',
+                        fontWeight: 700,
+                        letterSpacing: '-0.02em',
+                        lineHeight: 0.85,
+                        whiteSpace: 'nowrap',
+                        textAlign: 'center',
+                        padding: '0.5rem 0 0',
+                        background: 'linear-gradient(to bottom, rgba(255,255,255,0.12), rgba(255,255,255,0.02))',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        backgroundClip: 'text',
+                        userSelect: 'none',
+                        pointerEvents: 'none',
+                    }}>
+                        TEMIR USTA
+                    </p>
                 </div>
             </div>
 
@@ -177,10 +172,10 @@ export default function Footer() {
                 color: 'rgba(255,255,255,0.3)',
                 fontSize: '0.8rem',
             }}>
-                <p>© {new Date().getFullYear()} Temir Usta. Барлық құқықтар қорғалған.</p>
+                <p>© {new Date().getFullYear()} Temir Usta. {tx.copyright}</p>
                 <div style={{ display: 'flex', gap: '1.5rem' }}>
-                    <Link to="/" style={{ opacity: 1 }}>Құпиялық саясаты</Link>
-                    <Link to="/" style={{ opacity: 1 }}>Қолдану ережелері</Link>
+                    <Link to={langPath('/')} style={{ opacity: 1 }}>{tx.privacyPolicy}</Link>
+                    <Link to={langPath('/')} style={{ opacity: 1 }}>{tx.termsOfUse}</Link>
                 </div>
             </div>
 

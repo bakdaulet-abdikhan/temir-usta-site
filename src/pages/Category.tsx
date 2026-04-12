@@ -1,11 +1,13 @@
 import { useParams, Link } from 'react-router-dom';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { X, ZoomIn, ZoomOut, ChevronLeft, ChevronRight, Search } from 'lucide-react';
+import { useLang } from '../i18n/LanguageContext';
+import { translations } from '../i18n/translations';
 
-const tierInfo: Record<string, { title: string; color: string; desc: string; priceRange: string }> = {
-    standard: { title: 'Standard', color: '#f5f5f5', desc: 'Сенімді шешім. Күнделікті қолдануға арналған тұрақты қақпалар.', priceRange: '230 000 – 360 000 ₸' },
-    premium: { title: 'Premium', color: '#e0e0e0', desc: 'Жоғары сапалы материалдар мен заманауи дизайн.', priceRange: '350 000 – 600 000 ₸' },
-    lux: { title: 'Lux', color: '#cecece', desc: 'Эксклюзивті дизайн, ең жоғары сапа.', priceRange: '600 000+ ₸' },
+const TIER_STATIC: Record<string, { title: string; color: string }> = {
+    standard: { title: 'Standard', color: '#f5f5f5' },
+    premium: { title: 'Premium', color: '#e0e0e0' },
+    lux: { title: 'Lux', color: '#cecece' },
 };
 
 const tierOrder = ['standard', 'premium', 'lux'];
@@ -14,7 +16,6 @@ function r2Img(id: string) {
     return `https://pub-45c64cad9ebf4f4f8e48e787f035d2f3.r2.dev/${id.split('-')[0]}/${id}.webp`;
 }
 
-// Retry handler for failed images — appends cache-busting param
 function handleImgError(e: React.SyntheticEvent<HTMLImageElement>) {
     const img = e.currentTarget;
     const retries = Number(img.dataset.retries || '0');
@@ -25,7 +26,6 @@ function handleImgError(e: React.SyntheticEvent<HTMLImageElement>) {
     }
 }
 
-// Standard gates (16 items) — S1-xx
 const standardGates = [
     { id: 'S1-01', image: r2Img('S1-01') },
     { id: 'S1-02', image: r2Img('S1-02') },
@@ -44,7 +44,6 @@ const standardGates = [
     { id: 'S1-15', image: r2Img('S1-15') },
 ];
 
-// Premium gates (44 items) — P2-xx
 const premiumGates = [
     { id: 'P2-01', image: r2Img('P2-01') },
     { id: 'P2-02', image: r2Img('P2-02') },
@@ -66,14 +65,12 @@ const premiumGates = [
     { id: 'P2-18', image: r2Img('P2-18') },
     { id: 'P2-19', image: r2Img('P2-19') },
     { id: 'P2-20', image: r2Img('P2-20') },
-
     { id: 'P2-22', image: r2Img('P2-22') },
     { id: 'P2-23', image: r2Img('P2-23') },
     { id: 'P2-24', image: r2Img('P2-24') },
     { id: 'P2-25', image: r2Img('P2-25') },
     { id: 'P2-26', image: r2Img('P2-26') },
     { id: 'P2-27', image: r2Img('P2-27') },
-
     { id: 'P2-29', image: r2Img('P2-29') },
     { id: 'P2-30', image: r2Img('P2-30') },
     { id: 'P2-31', image: r2Img('P2-31') },
@@ -92,7 +89,6 @@ const premiumGates = [
     { id: 'P2-44', image: r2Img('P2-44') },
 ];
 
-// Lux gates (69 items) — L3-xx
 const luxGates = [
     { id: 'L3-01', image: r2Img('L3-01') },
     { id: 'L3-02', image: r2Img('L3-02') },
@@ -109,7 +105,6 @@ const luxGates = [
     { id: 'L3-13', image: r2Img('L3-13') },
     { id: 'L3-14', image: r2Img('L3-14') },
     { id: 'L3-15', image: r2Img('L3-15') },
-
     { id: 'L3-18', image: r2Img('L3-18') },
     { id: 'L3-19', image: r2Img('L3-19') },
     { id: 'L3-20', image: r2Img('L3-20') },
@@ -159,7 +154,6 @@ const luxGates = [
     { id: 'L3-65', image: r2Img('L3-65') },
     { id: 'L3-66', image: r2Img('L3-66') },
     { id: 'L3-67', image: r2Img('L3-67') },
-
     { id: 'L3-69', image: r2Img('L3-69') },
 ];
 
@@ -193,13 +187,11 @@ function ZoomModal({
     const hasPrev = idx > 0;
     const hasNext = idx < gates.length - 1;
 
-    // Reset zoom when gate changes
     useEffect(() => {
         setScale(1);
         setTranslate({ x: 0, y: 0 });
     }, [gate.id]);
 
-    // Prevent body scrolling when modal is open
     useEffect(() => {
         document.body.style.overflow = 'hidden';
         return () => { document.body.style.overflow = ''; };
@@ -225,7 +217,6 @@ function ZoomModal({
         setTranslate({ x: 0, y: 0 });
     }, []);
 
-    // Pinch-to-zoom
     const onTouchStart = (e: React.TouchEvent) => {
         if (e.touches.length === 2) {
             e.preventDefault();
@@ -297,7 +288,6 @@ function ZoomModal({
             }}
             onClick={onClose}
         >
-            {/* Top bar: close + zoom controls */}
             <div
                 onClick={(e) => e.stopPropagation()}
                 style={{
@@ -306,12 +296,9 @@ function ZoomModal({
                     padding: '1rem 1.5rem', zIndex: 1001,
                 }}
             >
-                {/* Gate ID */}
                 <p style={{ color: '#fff', fontSize: '1.1rem', fontWeight: 600, letterSpacing: '1px' }}>
                     {gate.id}
                 </p>
-
-                {/* Zoom controls */}
                 <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
                     <button onClick={handleZoomOut} style={btnStyle}
                         onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.2)'}
@@ -334,9 +321,7 @@ function ZoomModal({
                     >
                         <ZoomIn size={20} />
                     </button>
-
                     <div style={{ width: '1px', height: '24px', backgroundColor: 'rgba(255,255,255,0.2)', margin: '0 0.25rem' }} />
-
                     <button onClick={(e) => { e.stopPropagation(); onClose(); }} style={btnStyle}
                         onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.2)'}
                         onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.1)'}
@@ -346,7 +331,6 @@ function ZoomModal({
                 </div>
             </div>
 
-            {/* Prev / Next */}
             <button
                 onClick={(e) => { e.stopPropagation(); if (hasPrev) { onNavigate(gates[idx - 1]); } }}
                 style={{ ...navBtnStyle(hasPrev), left: '1rem' }}
@@ -364,7 +348,6 @@ function ZoomModal({
                 <ChevronRight size={28} />
             </button>
 
-            {/* Image container with pinch-to-zoom + drag */}
             <div
                 ref={imgRef}
                 onClick={(e) => e.stopPropagation()}
@@ -399,8 +382,12 @@ function ZoomModal({
 /* ─── Category Page ─── */
 export default function Category() {
     const { tier } = useParams<{ tier: string }>();
-    const currentTier = tier && tierInfo[tier] ? tier : 'standard';
-    const info = tierInfo[currentTier];
+    const { lang, langPath } = useLang();
+    const tx = translations[lang];
+
+    const currentTier = tier && TIER_STATIC[tier] ? tier : 'standard';
+    const staticInfo = TIER_STATIC[currentTier];
+    const tierDesc = tx.tierInfo[currentTier as keyof typeof tx.tierInfo];
     const gates = gateData[currentTier] || [];
 
     const [zoomedGate, setZoomedGate] = useState<null | { id: string; image: string }>(null);
@@ -420,10 +407,10 @@ export default function Category() {
             }}>
                 <div className="container" style={{ textAlign: 'center' }}>
                     <h1 style={{ fontSize: 'clamp(2.5rem, 5vw, 3.5rem)', marginBottom: '0.75rem', letterSpacing: '-0.5px' }}>
-                        <em style={{ color: 'var(--color-accent)', fontStyle: 'normal' }}>{info.title}</em> Қақпалар
+                        <em style={{ color: 'var(--color-accent)', fontStyle: 'normal' }}>{staticInfo.title}</em> {tx.category.gatesLabel}
                     </h1>
-                    <p style={{ opacity: 0.7, fontSize: '1.1rem', maxWidth: '500px', margin: '0 auto' }}>{info.desc}</p>
-                    <p style={{ fontSize: '1.3rem', fontWeight: 600, color: 'var(--color-accent)', marginTop: '1rem' }}>{info.priceRange}</p>
+                    <p style={{ opacity: 0.7, fontSize: '1.1rem', maxWidth: '500px', margin: '0 auto' }}>{tierDesc.desc}</p>
+                    <p style={{ fontSize: '1.3rem', fontWeight: 600, color: 'var(--color-accent)', marginTop: '1rem' }}>{tierDesc.priceRange}</p>
                 </div>
             </section>
 
@@ -432,7 +419,7 @@ export default function Category() {
                 <div className="container" style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', padding: '1rem 0', flexWrap: 'wrap' }}>
                     {tierOrder.map((t) => (
                         <Link
-                            to={`/catalog/${t}`}
+                            to={langPath(`/catalog/${t}`)}
                             key={t}
                             style={{
                                 padding: '0.65rem 1.8rem',
@@ -447,7 +434,7 @@ export default function Category() {
                             }}
                             className={t !== currentTier ? 'hover-scale' : ''}
                         >
-                            {tierInfo[t].title}
+                            {TIER_STATIC[t].title}
                         </Link>
                     ))}
                 </div>
@@ -475,7 +462,7 @@ export default function Category() {
                                 className="hover-scale"
                                 onClick={() => setZoomedGate(gate)}
                             >
-                                <div style={{ position: 'relative', paddingTop: '66%', backgroundColor: info.color, overflow: 'hidden' }}>
+                                <div style={{ position: 'relative', paddingTop: '66%', backgroundColor: staticInfo.color, overflow: 'hidden' }}>
                                     <img
                                         src={gate.image}
                                         alt={gate.id}
@@ -483,7 +470,6 @@ export default function Category() {
                                         style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
                                         loading="lazy"
                                     />
-                                    {/* Magnifier icon: always visible on mobile, hover-only on desktop */}
                                     <div
                                         className="zoom-icon-wrapper"
                                         style={{
@@ -508,7 +494,7 @@ export default function Category() {
                                         {gate.id}
                                     </p>
                                     <a
-                                        href={`https://wa.me/77056401566?text=${encodeURIComponent(`Сәлеметсіз бе! Мені ${info.title} санатындағы ${gate.id} қақпасы қызықтырады. Бағасын айтып бере аласыз ба?`)}`}
+                                        href={`https://wa.me/77056401566?text=${encodeURIComponent(tx.category.waMsg(staticInfo.title, gate.id))}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         onClick={(e) => e.stopPropagation()}
@@ -529,7 +515,7 @@ export default function Category() {
                                         onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#1da851'}
                                         onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#25D366'}
                                     >
-                                        Бағасын білу
+                                        {tx.category.checkPrice}
                                     </a>
                                 </div>
                             </div>
@@ -537,12 +523,10 @@ export default function Category() {
                     </div>
                 </div>
                 <style>{`
-                    /* Desktop: hide magnifier by default, show on hover */
                     @media (hover: hover) {
                         .zoom-icon-wrapper { opacity: 0 !important; }
                         .hover-scale:hover .zoom-icon-wrapper { opacity: 1 !important; }
                     }
-                    /* Touch / mobile: always show magnifier */
                     @media (hover: none) {
                         .zoom-icon-wrapper { opacity: 0.85 !important; }
                     }

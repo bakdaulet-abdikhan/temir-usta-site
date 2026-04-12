@@ -4,20 +4,27 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import Category from './pages/Category';
+import { LanguageProvider } from './i18n/LanguageContext';
 
 function App() {
   return (
     <Router>
-      <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-        <Header />
-        <main style={{ flexGrow: 1 }}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/catalog/:tier" element={<Category />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
+      <LanguageProvider>
+        <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+          <Header />
+          <main style={{ flexGrow: 1 }}>
+            <Routes>
+              {/* Kazakh (default) */}
+              <Route path="/" element={<Home />} />
+              <Route path="/catalog/:tier" element={<Category />} />
+              {/* Russian */}
+              <Route path="/ru" element={<Home />} />
+              <Route path="/ru/catalog/:tier" element={<Category />} />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
+      </LanguageProvider>
     </Router>
   );
 }

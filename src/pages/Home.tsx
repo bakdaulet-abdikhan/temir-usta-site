@@ -1,6 +1,8 @@
 import { Truck, Wrench, ArrowRight, Shield, Gem, Crown, Phone, PenLine, CheckCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useState, useEffect, useRef, type ReactNode } from 'react';
+import { useLang } from '../i18n/LanguageContext';
+import { translations } from '../i18n/translations';
 
 /* ─── Scroll Reveal Component ─── */
 function ScrollReveal({ children, delay = 0, className = '' }: { children: ReactNode; delay?: number; className?: string }) {
@@ -23,62 +25,27 @@ function ScrollReveal({ children, delay = 0, className = '' }: { children: React
     return <div ref={ref} className={`reveal-hidden ${className}`}>{children}</div>;
 }
 
-const tiers = [
-    {
-        id: 'standard',
-        title: 'Standard',
-        price: '230,000 – 360,000 ₸',
-        desc: 'Сенімді шешім. Күнделікті қолдануға арналған тұрақты қақпалар.',
-        icon: Shield,
-        features: ['Мықты металл конструкция', 'Стандартты бояу', 'Жеткізу 1–7 күн', 'Кепілдік 3 жыл'],
-    },
-    {
-        id: 'premium',
-        title: 'Premium',
-        price: '350,000 – 600,000 ₸',
-        desc: 'Жоғары сапалы материалдар мен заманауи дизайн.',
-        icon: Gem,
-        features: ['Премиум материалдар', 'Дизайнерлік бояу', 'Жеткізу 1–5 күн', 'Кепілдік 5 жыл'],
-    },
-    {
-        id: 'lux',
-        title: 'Lux',
-        price: '600,000+ ₸',
-        desc: 'Эксклюзивті дизайн, ең жоғары сапа және ұзақ мерзімділік.',
-        icon: Crown,
-        features: ['Эксклюзивті дизайн', 'Автоматтандыру', 'VIP жеткізу', 'Кепілдік 7 жыл'],
-    },
-];
-
+const TIER_ICONS = [Shield, Gem, Crown];
+const STEP_ICONS = [Phone, PenLine, Wrench, Truck, CheckCircle];
 
 const r2Img = (id: string) => `https://pub-45c64cad9ebf4f4f8e48e787f035d2f3.r2.dev/${id.split("-")[0]}/${id}.webp`;
 
 const galleryImages = [
-    // Standard
     { id: 'S1-01', url: r2Img('S1-01') },
     { id: 'S1-05', url: r2Img('S1-05') },
     { id: 'S1-10', url: r2Img('S1-10') },
     { id: 'S1-14', url: r2Img('S1-14') },
-    // Premium
     { id: 'P2-08', url: r2Img('P2-08') },
     { id: 'P2-14', url: r2Img('P2-14') },
     { id: 'P2-20', url: r2Img('P2-20') },
     { id: 'P2-30', url: r2Img('P2-30') },
     { id: 'P2-38', url: r2Img('P2-38') },
-    // Lux
     { id: 'L3-20', url: r2Img('L3-20') },
     { id: 'L3-35', url: r2Img('L3-35') },
     { id: 'L3-45', url: r2Img('L3-45') },
     { id: 'L3-55', url: r2Img('L3-55') },
     { id: 'L3-63', url: r2Img('L3-63') },
     { id: 'L3-69', url: r2Img('L3-69') },
-];
-
-const stats = [
-    { number: '15+', label: 'Жыл тәжірибе' },
-    { number: '5,000+', label: 'Сәтті орнатылған қақпалар' },
-    { number: '100%', label: 'Сапа кепілдігі' },
-    { number: '2', label: 'Жеке зауытымыз' },
 ];
 
 /* ─── YouTube Facade Component ─── */
@@ -108,7 +75,7 @@ function YouTubeFacade({ videoId }: { videoId: string }) {
                 >
                     <img
                         src={thumb}
-                        alt="Видео"
+                        alt="Video"
                         style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
                     />
                     <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(0,0,0,0.35)' }} />
@@ -128,15 +95,21 @@ function YouTubeFacade({ videoId }: { videoId: string }) {
 
 /* ─── Home Page ─── */
 export default function Home() {
+    const { lang, langPath } = useLang();
+    const tx = translations[lang];
+
+    const tiers = tx.tiers;
+    const stats = tx.stats;
+
     return (
         <div style={{ backgroundColor: 'var(--color-bg-light)', overflowX: 'hidden' }}>
 
             {/* ═══ Hero Section ═══ */}
-            <section style={{ 
-                position: 'relative', 
-                minHeight: '100vh', 
-                display: 'flex', 
-                alignItems: 'center', 
+            <section style={{
+                position: 'relative',
+                minHeight: '100vh',
+                display: 'flex',
+                alignItems: 'center',
                 justifyContent: 'center',
                 textAlign: 'left',
                 backgroundImage: 'url(/hero-img.png)',
@@ -144,26 +117,26 @@ export default function Home() {
                 backgroundPosition: 'center',
             }}>
                 <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, rgba(10, 10, 10, 0.9) 0%, rgba(10, 10, 10, 0.4) 100%)' }} />
-                <div className="container" style={{ position: 'relative', zIndex: 10,  color: 'var(--color-text-light)' }}>
+                <div className="container" style={{ position: 'relative', zIndex: 10, color: 'var(--color-text-light)' }}>
                     <div style={{ maxWidth: '700px' }}>
                         <div className="slide-up" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '2rem', color: 'var(--color-accent)', fontWeight: 500, letterSpacing: '2px', textTransform: 'uppercase', fontSize: '0.85rem' }}>
                             <div style={{ width: '40px', height: '1px', backgroundColor: 'var(--color-accent)' }} />
-                            Сенімділік пен Стиль
+                            {tx.hero.badge}
                         </div>
 
                         <h1 className="slide-up" style={{ animationDelay: '0.1s', fontSize: 'clamp(3rem, 6vw, 5.5rem)', marginBottom: '1.5rem', lineHeight: 1.05, letterSpacing: '-0.02em' }}>
-                            Темір Уста<br />
-                            <span style={{ fontStyle: 'italic', fontWeight: 'normal', opacity: 0.9 }}>қақпа жасау шеберлері</span>
+                            {tx.hero.title}<br />
+                            <span style={{ fontStyle: 'italic', fontWeight: 'normal', opacity: 0.9 }}>{tx.hero.subtitle}</span>
                         </h1>
                         <p className="slide-up" style={{ animationDelay: '0.2s', fontSize: '1.2rem', marginBottom: '3rem', maxWidth: '500px', lineHeight: 1.6, color: 'rgba(255,255,255,0.7)' }}>
-                            Сапалы материалдардан жасалған, ондаған жылдар бойы қызмет ететін премиум қақпалар. Қазақстан бойынша жедел жеткізу.
+                            {tx.hero.desc}
                         </p>
                         <div className="slide-up" style={{ animationDelay: '0.3s', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-                            <Link to="/catalog/standard" className="btn-primary hover-scale" style={{ textTransform: 'uppercase', fontSize: '0.9rem', letterSpacing: '1px' }}>
-                                Каталогты көру <ArrowRight size={18} style={{ marginLeft: '10px' }} />
+                            <Link to={langPath('/catalog/standard')} className="btn-primary hover-scale" style={{ textTransform: 'uppercase', fontSize: '0.9rem', letterSpacing: '1px' }}>
+                                {tx.hero.cta} <ArrowRight size={18} style={{ marginLeft: '10px' }} />
                             </Link>
                             <a href="https://wa.me/77056401566" target="_blank" rel="noopener noreferrer" className="btn-outline hover-scale" style={{ borderColor: 'rgba(255,255,255,0.3)', color: 'var(--color-text-light)', textTransform: 'uppercase', fontSize: '0.9rem', letterSpacing: '1px' }}>
-                                Бізбен байланыс
+                                {tx.hero.contact}
                             </a>
                         </div>
                     </div>
@@ -175,14 +148,12 @@ export default function Home() {
 
                 {/* Scrolling strip */}
                 <div style={{ position: 'relative', overflow: 'hidden' }}>
-                    {/* Fade left */}
                     <div className="gallery-fade-left" style={{ position: 'absolute', left: 0, top: 0, bottom: 0, background: 'linear-gradient(to right, var(--color-bg-light), transparent)', zIndex: 10, pointerEvents: 'none' }} />
-                    {/* Fade right */}
                     <div className="gallery-fade-right" style={{ position: 'absolute', right: 0, top: 0, bottom: 0, background: 'linear-gradient(to left, var(--color-bg-light), transparent)', zIndex: 10, pointerEvents: 'none' }} />
 
                     <div className="gallery-track">
                         {[...galleryImages, ...galleryImages].map((img, i) => (
-                            <Link to="/catalog/lux" key={i} style={{ flexShrink: 0, display: 'block', width: '280px', height: '200px', overflow: 'hidden', borderRadius: '10px', backgroundColor: '#e8e8e8' }}>
+                            <Link to={langPath('/catalog/lux')} key={i} style={{ flexShrink: 0, display: 'block', width: '280px', height: '200px', overflow: 'hidden', borderRadius: '10px', backgroundColor: '#e8e8e8' }}>
                                 <img
                                     src={img.url}
                                     alt={img.id}
@@ -217,11 +188,11 @@ export default function Home() {
 
                 {/* CTA below gallery */}
                 <div style={{ textAlign: 'center', marginTop: '2.5rem' }}>
-                    <Link to="/catalog/standard" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.85rem 2rem', border: '1.5px solid var(--color-border-light)', color: 'var(--color-text-dark)', fontWeight: 600, fontSize: '0.9rem', borderRadius: '12px', transition: 'all 0.25s', textDecoration: 'none' }}
+                    <Link to={langPath('/catalog/standard')} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.85rem 2rem', border: '1.5px solid var(--color-border-light)', color: 'var(--color-text-dark)', fontWeight: 600, fontSize: '0.9rem', borderRadius: '12px', transition: 'all 0.25s', textDecoration: 'none' }}
                         onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--color-accent)'; e.currentTarget.style.color = 'var(--color-accent)'; }}
                         onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--color-border-light)'; e.currentTarget.style.color = 'var(--color-text-dark)'; }}
                     >
-                        Каталогты толық көру <ArrowRight size={16} />
+                        {tx.gallery.viewAll} <ArrowRight size={16} />
                     </Link>
                 </div>
             </section>
@@ -234,16 +205,17 @@ export default function Home() {
                             <div style={{ flex: '1 1 360px' }}>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem', color: 'var(--color-accent)', fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase', fontSize: '0.85rem' }}>
                                     <div style={{ width: '40px', height: '1px', backgroundColor: 'var(--color-accent)' }} />
-                                    КОМПАНИЯ ТУРАЛЫ
+                                    {tx.about.badge}
                                 </div>
                                 <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3.2rem)', marginBottom: '1.25rem', color: 'var(--color-text-light)', letterSpacing: '-0.02em', lineHeight: 1.1 }}>
-                                    Сапаны бағалайтын<br />жандар үшін
+                                    {tx.about.heading1}<br />
+                                    {tx.about.heading2}
                                 </h2>
                                 <p style={{ fontSize: '1.05rem', color: 'rgba(255,255,255,0.7)', marginBottom: '1rem', lineHeight: 1.7 }}>
-                                    Темір Уста — жай ғана қақпа жасаушылар емес, әрбір бөлшегіне мән беретін нағыз шеберлер. Біз сіздің үйіңіздің қауіпсіздігі мен сұлулығы үшін тек ең таңдаулы материалдарды қолданамыз.
+                                    {tx.about.p1}
                                 </p>
                                 <p style={{ fontSize: '1.05rem', color: 'rgba(255,255,255,0.7)', lineHeight: 1.7 }}>
-                                    15 жылдан астам уақыт ішінде мыңдаған отбасының сеніміне ие болдық. Әрбір жасалған қақпа — біздің мақтанышымыз.
+                                    {tx.about.p2}
                                 </p>
                             </div>
                         </ScrollReveal>
@@ -282,14 +254,14 @@ export default function Home() {
                 <div style={{ position: 'relative', overflow: 'hidden', marginTop: '4rem' }}>
                     <div className="factory-track">
                         {[
-                            { src: '/factory/factory-welding-gate.png', alt: 'Зауытта қақпа жасау' },
-                            { src: '/factory/factory-welding-close.png', alt: 'Дәнекерлеу жұмысы' },
-                            { src: '/factory/factory-machinery.png', alt: 'Өндіріс жабдықтары' },
-                            { src: '/factory/factory-painting.png', alt: 'Бояу цехі' },
-                            { src: '/factory/factory-welding-gate.png', alt: 'Зауытта қақпа жасау' },
-                            { src: '/factory/factory-welding-close.png', alt: 'Дәнекерлеу жұмысы' },
-                            { src: '/factory/factory-machinery.png', alt: 'Өндіріс жабдықтары' },
-                            { src: '/factory/factory-painting.png', alt: 'Бояу цехі' },
+                            { src: '/factory/factory-welding-gate.png', alt: 'Gate manufacturing' },
+                            { src: '/factory/factory-welding-close.png', alt: 'Welding work' },
+                            { src: '/factory/factory-machinery.png', alt: 'Production equipment' },
+                            { src: '/factory/factory-painting.png', alt: 'Painting workshop' },
+                            { src: '/factory/factory-welding-gate.png', alt: 'Gate manufacturing' },
+                            { src: '/factory/factory-welding-close.png', alt: 'Welding work' },
+                            { src: '/factory/factory-machinery.png', alt: 'Production equipment' },
+                            { src: '/factory/factory-painting.png', alt: 'Painting workshop' },
                         ].map((img, i) => (
                             <div key={i} style={{ flexShrink: 0, width: '480px', height: '300px', overflow: 'hidden' }}>
                                 <img src={img.src} alt={img.alt} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
@@ -308,39 +280,30 @@ export default function Home() {
             {/* ═══ Process Section ═══ */}
             <section style={{ padding: '6rem 0', backgroundColor: 'var(--color-surface-light)' }}>
                 <div className="container">
-                    {/* Badge + Heading */}
                     <ScrollReveal>
                         <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
                             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', backgroundColor: '#fff', border: '1.5px solid var(--color-border-light)', borderRadius: '999px', padding: '0.4rem 1.1rem', fontSize: '0.8rem', fontWeight: 600, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'var(--color-text-muted)', marginBottom: '1.5rem' }}>
                                 <span style={{ width: '7px', height: '7px', borderRadius: '50%', backgroundColor: 'var(--color-accent)', display: 'inline-block' }} />
-                                ПРОЦЕСС
+                                {tx.process.badge}
                             </div>
                             <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', color: 'var(--color-text-dark)', letterSpacing: '-0.02em', lineHeight: 1.15 }}>
-                                Бастан аяқ —<br />
-                                <span style={{ color: 'var(--color-accent)' }}>сенімді процесс</span>
+                                {tx.process.heading1}<br />
+                                <span style={{ color: 'var(--color-accent)' }}>{tx.process.heading2}</span>
                             </h2>
                         </div>
                     </ScrollReveal>
 
-                    {/* Steps */}
                     <div className="process-grid">
-                        {[
-                            { num: '01', icon: Phone,       title: 'Кеңес алу',    desc: 'Тегін кеңес береміз, қажеттілік пен бюджетті анықтаймыз.' },
-                            { num: '02', icon: PenLine,     title: 'Дизайн',       desc: 'Талғамыңызға сай жеке дизайн мен өлшем жоспарын жасаймыз.' },
-                            { num: '03', icon: Wrench,      title: 'Жасау',        desc: 'Зауытта жоғары сапалы материалдардан қақпаны дайындаймыз.' },
-                            { num: '04', icon: Truck,       title: 'Жеткізу',      desc: 'Қазақстанның кез келген аймағына жедел жеткіземіз.' },
-                            { num: '05', icon: CheckCircle, title: 'Орнату',       desc: 'Мамандарымыз орнатып, бірге тексеріп, кепілдік береміз.' },
-                        ].map((step, i, arr) => {
-                            const Icon = step.icon;
+                        {tx.process.steps.map((step, i, arr) => {
+                            const Icon = STEP_ICONS[i];
                             return (
                                 <div key={i} style={{ position: 'relative', textAlign: 'center', padding: '1.5rem 0.75rem' }}>
-                                    {/* Icon circle */}
                                     <div style={{ position: 'relative', width: '86px', height: '86px', margin: '0 auto 1.4rem' }}>
                                         <div style={{ width: '86px', height: '86px', borderRadius: '50%', backgroundColor: '#fff', border: '1.5px solid var(--color-border-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 20px rgba(0,0,0,0.07)' }}>
                                             <Icon size={30} color="#9a9a9a" strokeWidth={1.5} />
                                         </div>
                                         <div style={{ position: 'absolute', top: '-5px', right: '-5px', width: '26px', height: '26px', borderRadius: '50%', backgroundColor: 'var(--color-accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.65rem', fontWeight: 700, color: '#fff', letterSpacing: '0.5px' }}>
-                                            {step.num}
+                                            {String(i + 1).padStart(2, '0')}
                                         </div>
                                     </div>
                                     <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--color-text-dark)', marginBottom: '0.6rem', fontFamily: 'var(--font-serif)' }}>
@@ -350,7 +313,6 @@ export default function Home() {
                                         {step.desc}
                                     </p>
 
-                                    {/* Curved SVG arrow between steps */}
                                     {i < arr.length - 1 && (
                                         <svg
                                             className="process-arrow-svg"
@@ -394,19 +356,20 @@ export default function Home() {
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '4rem', flexWrap: 'wrap', gap: '2rem' }}>
                             <div style={{ maxWidth: '600px' }}>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem', color: 'var(--color-accent)', fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase', fontSize: '0.85rem' }}>
-                                    БІЗДІҢ ӨНІМДЕР
+                                    {tx.catalog.badge}
                                 </div>
                                 <h2 style={{ fontSize: 'clamp(2.5rem, 4vw, 3.5rem)', color: 'var(--color-text-dark)', marginBottom: '1rem', letterSpacing: '-0.02em', lineHeight: 1.1 }}>
-                                    Санатты таңдаңыз
+                                    {tx.catalog.title}
                                 </h2>
                                 <p style={{ color: 'var(--color-text-muted)', fontSize: '1.1rem', lineHeight: 1.6 }}>
-                                    Әр түрлі талғам мен бюджетке арналған үш премиум санат. Төмендегі нұсқалардың бірін таңдап, толық каталогты көріңіз.
+                                    {tx.catalog.subtitle}
                                 </p>
                             </div>
                         </div>
                     </ScrollReveal>
                     <div className="tier-cards-grid">
-                        {tiers.map((tier) => {
+                        {tiers.map((tier, idx) => {
+                            const Icon = TIER_ICONS[idx];
                             const isLux = tier.id === 'lux';
                             const isPremium = tier.id === 'premium';
                             const bg = isLux ? 'var(--color-bg-dark)' : '#fff';
@@ -433,12 +396,12 @@ export default function Home() {
                                     {/* Badge */}
                                     {isLux && (
                                         <div style={{ position: 'absolute', top: '-14px', left: '50%', transform: 'translateX(-50%)', backgroundColor: 'var(--color-accent)', color: '#fff', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase', padding: '0.3rem 1rem', borderRadius: '999px', whiteSpace: 'nowrap' }}>
-                                            ★ Эксклюзивті
+                                            {tx.catalog.exclusiveBadge}
                                         </div>
                                     )}
                                     {isPremium && (
                                         <div style={{ position: 'absolute', top: '-14px', left: '50%', transform: 'translateX(-50%)', backgroundColor: 'var(--color-text-dark)', color: '#fff', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase', padding: '0.3rem 1rem', borderRadius: '999px', whiteSpace: 'nowrap' }}>
-                                            Ең танымал
+                                            {tx.catalog.popularBadge}
                                         </div>
                                     )}
 
@@ -446,11 +409,11 @@ export default function Home() {
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.75rem' }}>
                                         <div>
                                             <h3 style={{ fontSize: '1.75rem', color: textColor, marginBottom: '0.25rem', letterSpacing: '-0.02em' }}>{tier.title}</h3>
-                                            <p style={{ color: mutedColor, fontSize: '0.85rem' }}>бастап</p>
+                                            <p style={{ color: mutedColor, fontSize: '0.85rem' }}>{tx.catalog.from}</p>
                                             <p style={{ color: isLux ? 'var(--color-accent)' : 'var(--color-text-dark)', fontWeight: 700, fontSize: '1.2rem', marginTop: '0.2rem' }}>{tier.price}</p>
                                         </div>
                                         <div style={{ width: '48px', height: '48px', backgroundColor: iconBg, borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                                            <tier.icon size={22} color="var(--color-accent)" />
+                                            <Icon size={22} color="var(--color-accent)" />
                                         </div>
                                     </div>
 
@@ -466,7 +429,7 @@ export default function Home() {
                                         ))}
                                     </ul>
 
-                                    <Link to={`/catalog/${tier.id}`}
+                                    <Link to={langPath(`/catalog/${tier.id}`)}
                                         style={{
                                             display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                                             padding: '0.9rem 1.25rem', borderRadius: '12px', fontWeight: 600, fontSize: '0.9rem',
@@ -486,7 +449,7 @@ export default function Home() {
                                             else { el.style.borderColor = 'var(--color-border-light)'; el.style.backgroundColor = 'transparent'; el.style.color = 'var(--color-text-dark)'; }
                                         }}
                                     >
-                                        Серияны көру <ArrowRight size={16} />
+                                        {tx.catalog.viewSeries} <ArrowRight size={16} />
                                     </Link>
                                 </div>
                             );
