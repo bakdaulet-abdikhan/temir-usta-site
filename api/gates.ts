@@ -51,7 +51,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             });
         }
 
-        res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=300');
+        res.setHeader('Cache-Control', 'no-store');
         res.json(gates);
     } catch (err) {
         console.error('R2 list error:', err);
