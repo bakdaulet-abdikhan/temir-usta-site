@@ -142,7 +142,7 @@ export default function Footer() {
                 <div className="container">
                     <p style={{
                         margin: 0,
-                        fontSize: 'min(16vw, 200px)',
+                        fontSize: 'min(calc((100vw - 3rem) / 6.5), 190px)',
                         fontFamily: 'var(--font-serif)',
                         fontWeight: 700,
                         letterSpacing: '-0.02em',
