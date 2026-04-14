@@ -25,9 +25,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
             for (const obj of response.Contents ?? []) {
                 const key = obj.Key ?? '';
-                // Keys look like "S1/S1-01.webp" — extract "S1-01"
-                const filename = key.split('/').pop()?.replace('.webp', '');
-                if (filename) all.push(filename);
+                // Keep the full key path (e.g. "S1/S1-01.webp") so we preserve the extension
+                if (key && !key.endsWith('/')) all.push(key);
             }
 
             continuationToken = response.NextContinuationToken;
@@ -35,18 +34,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
         const gates: Record<string, string[]> = { standard: [], premium: [], lux: [] };
 
-        for (const id of all) {
+        for (const key of all) {
+            const filename = key.split('/').pop() ?? '';
+            const id = filename.replace(/\.[^.]+$/, ''); // strip any extension
             const prefix = id.split('-')[0]; // S1, P2, L3
-            if (prefix.startsWith('S')) gates.standard.push(id);
-            else if (prefix.startsWith('P')) gates.premium.push(id);
-            else if (prefix.startsWith('L')) gates.lux.push(id);
+            if (prefix.startsWith('S')) gates.standard.push(key);
+            else if (prefix.startsWith('P')) gates.premium.push(key);
+            else if (prefix.startsWith('L')) gates.lux.push(key);
         }
 
-        // Sort each tier numerically
+        // Sort each tier numerically by the number in the filename
         for (const tier of Object.keys(gates)) {
             gates[tier].sort((a, b) => {
-                const na = parseInt(a.split('-')[1]);
-                const nb = parseInt(b.split('-')[1]);
+                const idA = (a.split('/').pop() ?? '').replace(/\.[^.]+$/, '');
+                const idB = (b.split('/').pop() ?? '').replace(/\.[^.]+$/, '');
+                const na = parseInt(idA.split('-')[1]);
+                const nb = parseInt(idB.split('-')[1]);
                 return na - nb;
             });
         }

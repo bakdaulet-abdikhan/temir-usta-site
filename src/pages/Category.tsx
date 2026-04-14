@@ -400,8 +400,14 @@ export default function Category() {
             .then(r => r.json())
             .then((data: Record<string, string[]>) => {
                 const mapped: Record<string, { id: string; image: string }[]> = {};
-                for (const [t, ids] of Object.entries(data)) {
-                    mapped[t] = ids.map(id => ({ id, image: r2Img(id) }));
+                const R2_BASE = 'https://pub-45c64cad9ebf4f4f8e48e787f035d2f3.r2.dev';
+                for (const [t, keys] of Object.entries(data)) {
+                    // keys are full paths like "S1/S1-16.jpeg" — preserve the real extension
+                    mapped[t] = keys.map(key => {
+                        const filename = key.split('/').pop() ?? key;
+                        const id = filename.replace(/\.[^.]+$/, '');
+                        return { id, image: `${R2_BASE}/${key}` };
+                    });
                 }
                 setAllGates(mapped);
             })
