@@ -390,7 +390,7 @@ export default function Category() {
     const tierDesc = tx.tierInfo[currentTier as keyof typeof tx.tierInfo];
 
     const [allGates, setAllGates] = useState<Record<string, { id: string; image: string }[]>>(gateData);
-    const [loadingGates, setLoadingGates] = useState(true);
+    const [, setLoadingGates] = useState(true);
 
     const gates = allGates[currentTier] || [];
 
