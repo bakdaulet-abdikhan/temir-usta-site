@@ -388,7 +388,28 @@ export default function Category() {
     const currentTier = tier && TIER_STATIC[tier] ? tier : 'standard';
     const staticInfo = TIER_STATIC[currentTier];
     const tierDesc = tx.tierInfo[currentTier as keyof typeof tx.tierInfo];
-    const gates = gateData[currentTier] || [];
+
+    const [allGates, setAllGates] = useState<Record<string, { id: string; image: string }[]>>(gateData);
+    const [loadingGates, setLoadingGates] = useState(true);
+
+    const gates = allGates[currentTier] || [];
+
+    // Fetch live gate list from R2 via /api/gates
+    useEffect(() => {
+        fetch('/api/gates')
+            .then(r => r.json())
+            .then((data: Record<string, string[]>) => {
+                const mapped: Record<string, { id: string; image: string }[]> = {};
+                for (const [t, ids] of Object.entries(data)) {
+                    mapped[t] = ids.map(id => ({ id, image: r2Img(id) }));
+                }
+                setAllGates(mapped);
+            })
+            .catch(() => {
+                // API not available — keep using hardcoded fallback
+            })
+            .finally(() => setLoadingGates(false));
+    }, []);
 
     const [zoomedGate, setZoomedGate] = useState<null | { id: string; image: string }>(null);
 
