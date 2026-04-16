@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://temirusta.kz/sitemap.xml
+Sitemap: https://www.temirusta.kz/sitemap.xml
