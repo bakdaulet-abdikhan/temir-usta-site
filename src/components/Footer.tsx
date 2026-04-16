@@ -58,7 +58,7 @@ export default function Footer() {
                         {/* Brand */}
                         <div>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '1.25rem' }}>
-                                <img src="/temir-icon.svg" alt="Temir Usta icon" style={{ height: '34px', width: 'auto' }} />
+                                <img src="/temir-icon.svg" alt="Temir Usta icon" style={{ height: '24px', width: 'auto' }} />
                                 <span style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', fontWeight: 700, color: '#fff' }}>
                                     TEMIR ÚSTA
                                 </span>
