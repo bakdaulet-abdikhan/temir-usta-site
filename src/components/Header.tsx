@@ -63,8 +63,7 @@ export default function Header() {
                 alignItems: 'center',
                 height: '80px',
             }}>
-                <Link to={langPath('/')} style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', textDecoration: 'none' }}>
-                    <img src="/temir-icon.svg" alt="Temir Usta icon" style={{ height: '26px', width: 'auto' }} />
+                <Link to={langPath('/')} style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
                     <span style={{ fontFamily: 'var(--font-serif)', fontSize: '1.35rem', fontWeight: 700, letterSpacing: '0.5px', color: '#fff' }}>
                         TEMIR ÚSTA
                     </span>
