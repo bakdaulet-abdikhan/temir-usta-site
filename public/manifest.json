@@ -1,0 +1,16 @@
+{
+  "name": "Темір Ұста",
+  "short_name": "Темір Ұста",
+  "description": "Қазақстанның жетекші қақпа өндірушісі. Премиум қақпалар — Standard, Premium, Lux.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#0a0a0a",
+  "theme_color": "#0a0a0a",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "any",
+      "type": "image/png"
+    }
+  ]
+}
