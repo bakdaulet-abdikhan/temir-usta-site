@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useState, useEffect, useRef, type ReactNode } from 'react';
 import { useLang } from '../i18n/LanguageContext';
 import { translations } from '../i18n/translations';
+import { useSEO } from '../hooks/useSEO';
 
 /* ─── Scroll Reveal Component ─── */
 function ScrollReveal({ children, delay = 0, className = '' }: { children: ReactNode; delay?: number; className?: string }) {
@@ -97,6 +98,18 @@ function YouTubeFacade({ videoId }: { videoId: string }) {
 export default function Home() {
     const { lang, langPath } = useLang();
     const tx = translations[lang];
+
+    useSEO(
+        lang === 'ru'
+            ? {
+                  title: 'Темір Ұста — Премиум Ворота в Казахстане',
+                  description: 'Темір Ұста — ведущий производитель ворот в Казахстане. 15+ лет опыта, 5 000+ установленных ворот. Категории Standard, Premium и Lux. Бесплатная консультация, доставка по всему Казахстану.',
+              }
+            : {
+                  title: 'Темір Ұста — Қазақстандағы Премиум Қақпалар',
+                  description: 'Темір Ұста — Қазақстанның жетекші қақпа өндірушісі. 15+ жыл тәжірибе, 5 000+ орнатылған қақпа. Стандарт, Премиум және Люкс санаттары. Тегін кеңес, жедел жеткізу.',
+              }
+    );
 
     const tiers = tx.tiers;
     const stats = tx.stats;

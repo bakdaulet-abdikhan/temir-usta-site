@@ -3,6 +3,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { X, ZoomIn, ZoomOut, ChevronLeft, ChevronRight, Search } from 'lucide-react';
 import { useLang } from '../i18n/LanguageContext';
 import { translations } from '../i18n/translations';
+import { useSEO } from '../hooks/useSEO';
 
 const TIER_STATIC: Record<string, { title: string; color: string }> = {
     standard: { title: 'Standard', color: '#f5f5f5' },
@@ -386,6 +387,22 @@ export default function Category() {
     const tx = translations[lang];
 
     const currentTier = tier && TIER_STATIC[tier] ? tier : 'standard';
+
+    const tierSEO: Record<string, { kz: { title: string; description: string }; ru: { title: string; description: string } }> = {
+        standard: {
+            kz: { title: 'Standard Қақпалар — 230 000–360 000 ₸ | Темір Ұста', description: 'Темір Ұста Standard каталогы. Сенімді металл конструкция, стандартты бояу, 3 жыл кепілдік. Баға: 230 000–360 000 ₸. Қазақстан бойынша жеткізу.' },
+            ru: { title: 'Ворота Standard — 230 000–360 000 ₸ | Темір Ұста', description: 'Каталог ворот Standard от Темір Ұста. Прочная металлоконструкция, стандартная окраска, гарантия 3 года. Цена: 230 000–360 000 ₸. Доставка по Казахстану.' },
+        },
+        premium: {
+            kz: { title: 'Premium Қақпалар — 350 000–600 000 ₸ | Темір Ұста', description: 'Темір Ұста Premium каталогы. Жоғары сапалы материалдар, дизайнерлік бояу, 5 жыл кепілдік. Баға: 350 000–600 000 ₸. Қазақстан бойынша жеткізу.' },
+            ru: { title: 'Ворота Premium — 350 000–600 000 ₸ | Темір Ұста', description: 'Каталог ворот Premium от Темір Ұста. Высококачественные материалы, дизайнерская окраска, гарантия 5 лет. Цена: 350 000–600 000 ₸. Доставка по Казахстану.' },
+        },
+        lux: {
+            kz: { title: 'Lux Қақпалар — 600 000+ ₸ | Темір Ұста', description: 'Темір Ұста Lux каталогы. Эксклюзивті дизайн, автоматтандыру, VIP жеткізу, 7 жыл кепілдік. Баға: 600 000+ ₸. Қазақстан бойынша жеткізу.' },
+            ru: { title: 'Ворота Lux — 600 000+ ₸ | Темір Ұста', description: 'Каталог ворот Lux от Темір Ұста. Эксклюзивный дизайн, автоматизация, VIP доставка, гарантия 7 лет. Цена: 600 000+ ₸. Доставка по Казахстану.' },
+        },
+    };
+    useSEO(tierSEO[currentTier][lang]);
     const staticInfo = TIER_STATIC[currentTier];
     const tierDesc = tx.tierInfo[currentTier as keyof typeof tx.tierInfo];
 
