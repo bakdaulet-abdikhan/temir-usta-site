@@ -1,4 +1,4 @@
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useLocation } from 'react-router-dom';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { X, ZoomIn, ZoomOut, ChevronLeft, ChevronRight, Search } from 'lucide-react';
 import { useLang } from '../i18n/LanguageContext';
@@ -386,6 +386,9 @@ export default function Category({ whatsappNumber = '77056401566' }: { whatsappN
     const { lang, langPath } = useLang();
     const tx = translations[lang];
 
+    const { pathname } = useLocation();
+    const isAds = pathname.includes('/ads/');
+    const tierBasePath = isAds ? '/catalog/ads' : '/catalog';
     const currentTier = tier && TIER_STATIC[tier] ? tier : 'standard';
 
     const tierSEO: Record<string, { kz: { title: string; description: string }; ru: { title: string; description: string } }> = {
@@ -463,7 +466,7 @@ export default function Category({ whatsappNumber = '77056401566' }: { whatsappN
                 <div className="container" style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', padding: '1rem 0', flexWrap: 'wrap' }}>
                     {tierOrder.map((t) => (
                         <Link
-                            to={langPath(`/catalog/${t}`)}
+                            to={langPath(`${tierBasePath}/${t}`)}
                             key={t}
                             style={{
                                 padding: '0.65rem 1.8rem',
