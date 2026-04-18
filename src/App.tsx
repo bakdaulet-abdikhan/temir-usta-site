@@ -20,6 +20,9 @@ function App() {
               {/* Russian */}
               <Route path="/ru" element={<Home />} />
               <Route path="/ru/catalog/:tier" element={<Category />} />
+              {/* Ads pages — hidden, separate WhatsApp number */}
+              <Route path="/catalog/ads/:tier" element={<Category whatsappNumber="77273122530" />} />
+              <Route path="/ru/catalog/ads/:tier" element={<Category whatsappNumber="77273122530" />} />
             </Routes>
           </main>
           <Footer />

@@ -381,7 +381,7 @@ function ZoomModal({
 }
 
 /* ─── Category Page ─── */
-export default function Category() {
+export default function Category({ whatsappNumber = '77056401566' }: { whatsappNumber?: string }) {
     const { tier } = useParams<{ tier: string }>();
     const { lang, langPath } = useLang();
     const tx = translations[lang];
@@ -538,7 +538,7 @@ export default function Category() {
                                         {gate.id}
                                     </p>
                                     <a
-                                        href={`https://wa.me/77056401566?text=${encodeURIComponent(tx.category.waMsg(staticInfo.title, gate.id))}`}
+                                        href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(tx.category.waMsg(staticInfo.title, gate.id))}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         onClick={(e) => e.stopPropagation()}
