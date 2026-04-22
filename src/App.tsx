@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import Category from './pages/Category';
+import { PrivacyPage, TermsPage } from './pages/Policy';
 import { LanguageProvider } from './i18n/LanguageContext';
 
 function App() {
@@ -23,6 +24,11 @@ function App() {
               {/* Ads pages — hidden, separate WhatsApp number */}
               <Route path="/catalog/ads/:tier" element={<Category whatsappNumber="77273122530" />} />
               <Route path="/ru/catalog/ads/:tier" element={<Category whatsappNumber="77273122530" />} />
+              {/* Policy pages */}
+              <Route path="/privacy" element={<PrivacyPage />} />
+              <Route path="/terms" element={<TermsPage />} />
+              <Route path="/ru/privacy" element={<PrivacyPage />} />
+              <Route path="/ru/terms" element={<TermsPage />} />
             </Routes>
           </main>
           <Footer />

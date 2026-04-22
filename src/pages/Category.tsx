@@ -397,8 +397,8 @@ export default function Category({ whatsappNumber = '77056401566' }: { whatsappN
             ru: { title: 'Ворота Standard — 230 000–360 000 ₸ | Темір Ұста', description: 'Каталог ворот Standard от Темір Ұста. Прочная металлоконструкция, стандартная окраска, гарантия 3 года. Цена: 230 000–360 000 ₸. Доставка по Казахстану.' },
         },
         premium: {
-            kz: { title: 'Premium Қақпалар — 350 000–600 000 ₸ | Темір Ұста', description: 'Темір Ұста Premium каталогы. Жоғары сапалы материалдар, дизайнерлік бояу, 5 жыл кепілдік. Баға: 350 000–600 000 ₸. Қазақстан бойынша жеткізу.' },
-            ru: { title: 'Ворота Premium — 350 000–600 000 ₸ | Темір Ұста', description: 'Каталог ворот Premium от Темір Ұста. Высококачественные материалы, дизайнерская окраска, гарантия 5 лет. Цена: 350 000–600 000 ₸. Доставка по Казахстану.' },
+            kz: { title: 'Premium Қақпалар — 380 000–600 000 ₸ | Темір Ұста', description: 'Темір Ұста Premium каталогы. Жоғары сапалы материалдар, дизайнерлік бояу, 5 жыл кепілдік. Баға: 380 000–600 000 ₸. Қазақстан бойынша жеткізу.' },
+            ru: { title: 'Ворота Premium — 380 000–600 000 ₸ | Темір Ұста', description: 'Каталог ворот Premium от Темір Ұста. Высококачественные материалы, дизайнерская окраска, гарантия 5 лет. Цена: 380 000–600 000 ₸. Доставка по Казахстану.' },
         },
         lux: {
             kz: { title: 'Lux Қақпалар — 600 000+ ₸ | Темір Ұста', description: 'Темір Ұста Lux каталогы. Эксклюзивті дизайн, автоматтандыру, VIP жеткізу, 7 жыл кепілдік. Баға: 600 000+ ₸. Қазақстан бойынша жеткізу.' },
@@ -487,6 +487,33 @@ export default function Category({ whatsappNumber = '77056401566' }: { whatsappN
                 </div>
             </section>
 
+            {/* Tier Content Description */}
+            <section style={{ backgroundColor: '#fff', padding: '3rem 0 2rem' }}>
+                <div className="container" style={{ maxWidth: '900px', margin: '0 auto' }}>
+                    <h2 style={{ fontSize: 'clamp(1.4rem, 2.5vw, 1.9rem)', color: 'var(--color-text-dark)', marginBottom: '1.5rem', letterSpacing: '-0.02em', lineHeight: 1.25 }}>
+                        {tierDesc.contentHeading}
+                    </h2>
+                    <div className="tier-content-grid">
+                        <div>
+                            <p style={{ color: 'var(--color-text-muted)', lineHeight: 1.8, marginBottom: '1rem', fontSize: '0.95rem' }}>{tierDesc.contentP1}</p>
+                            <p style={{ color: 'var(--color-text-muted)', lineHeight: 1.8, fontSize: '0.95rem' }}>{tierDesc.contentP2}</p>
+                        </div>
+                        <div>
+                            <p style={{ color: 'var(--color-text-muted)', lineHeight: 1.8, marginBottom: '1.25rem', fontSize: '0.95rem' }}>{tierDesc.contentP3}</p>
+                            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+                                {tierDesc.contentHighlights.map((h: string, i: number) => (
+                                    <li key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--color-text-dark)', fontSize: '0.9rem', fontWeight: 500 }}>
+                                        <div style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: 'var(--color-accent)', flexShrink: 0 }} />
+                                        {h}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <style>{`.tier-content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; } @media(max-width:700px){.tier-content-grid{grid-template-columns:1fr;}}`}</style>
+            </section>
+
             {/* Gates Grid */}
             <section style={{ backgroundColor: 'var(--color-surface-light)', padding: '3rem 0 5rem 0' }}>
                 <div className="container">
@@ -512,7 +539,7 @@ export default function Category({ whatsappNumber = '77056401566' }: { whatsappN
                                 <div style={{ position: 'relative', paddingTop: '66%', backgroundColor: staticInfo.color, overflow: 'hidden' }}>
                                     <img
                                         src={gate.image}
-                                        alt={gate.id}
+                                        alt={`${lang === 'ru' ? `Металлические ворота ${staticInfo.title} модель` : `${staticInfo.title} темір қақпа үлгі`} ${gate.id} — Темір Ұста`}
                                         onError={handleImgError}
                                         style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
                                         loading="lazy"

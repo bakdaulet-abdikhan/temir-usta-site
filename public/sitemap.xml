@@ -31,6 +31,20 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://www.temirusta.kz/privacy</loc>
+    <xhtml:link rel="alternate" hreflang="kk" href="https://www.temirusta.kz/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://www.temirusta.kz/ru/privacy"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
+    <loc>https://www.temirusta.kz/terms</loc>
+    <xhtml:link rel="alternate" hreflang="kk" href="https://www.temirusta.kz/terms"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://www.temirusta.kz/ru/terms"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
+  </url>
 
   <!-- Russian -->
   <url>
@@ -60,6 +74,20 @@
     <xhtml:link rel="alternate" hreflang="ru" href="https://www.temirusta.kz/ru/catalog/lux"/>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.temirusta.kz/ru/privacy</loc>
+    <xhtml:link rel="alternate" hreflang="kk" href="https://www.temirusta.kz/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://www.temirusta.kz/ru/privacy"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
+    <loc>https://www.temirusta.kz/ru/terms</loc>
+    <xhtml:link rel="alternate" hreflang="kk" href="https://www.temirusta.kz/terms"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://www.temirusta.kz/ru/terms"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
   </url>
 
 </urlset>

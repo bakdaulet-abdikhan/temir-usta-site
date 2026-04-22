@@ -181,8 +181,8 @@ export default function Footer() {
             }}>
                 <p>© {new Date().getFullYear()} Temir Usta. {tx.copyright}</p>
                 <div style={{ display: 'flex', gap: '1.5rem' }}>
-                    <Link to={langPath('/')} style={{ opacity: 1 }}>{tx.privacyPolicy}</Link>
-                    <Link to={langPath('/')} style={{ opacity: 1 }}>{tx.termsOfUse}</Link>
+                    <Link to={langPath('/privacy')} style={{ opacity: 1 }}>{tx.privacyPolicy}</Link>
+                    <Link to={langPath('/terms')} style={{ opacity: 1 }}>{tx.termsOfUse}</Link>
                 </div>
             </div>
 

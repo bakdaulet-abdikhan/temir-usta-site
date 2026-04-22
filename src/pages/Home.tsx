@@ -169,7 +169,7 @@ export default function Home() {
                             <Link to={langPath('/catalog/lux')} key={i} style={{ flexShrink: 0, display: 'block', width: '280px', height: '200px', overflow: 'hidden', borderRadius: '10px', backgroundColor: '#e8e8e8' }}>
                                 <img
                                     src={img.url}
-                                    alt={img.id}
+                                    alt={`${lang === 'ru' ? 'Металлические ворота' : 'Темір қақпа'} ${img.id} — Темір Ұста`}
                                     loading="lazy"
                                     style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.4s ease', display: 'block' }}
                                     onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
@@ -360,6 +360,31 @@ export default function Home() {
                         .process-arrow-svg { display: none; }
                     }
                 `}</style>
+            </section>
+
+            {/* ═══ FAQ Section ═══ */}
+            <section style={{ padding: '6rem 0', backgroundColor: 'var(--color-surface-light)' }}>
+                <div className="container">
+                    <ScrollReveal>
+                        <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
+                            <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', color: 'var(--color-text-dark)', letterSpacing: '-0.02em', lineHeight: 1.15 }}>
+                                {tx.faq.heading}
+                            </h2>
+                        </div>
+                    </ScrollReveal>
+                    <div style={{ maxWidth: '800px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '0' }}>
+                        {tx.faq.items.map((item, i) => (
+                            <div key={i} style={{ borderBottom: '1px solid var(--color-border-light)', padding: '1.5rem 0' }}>
+                                <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--color-text-dark)', marginBottom: '0.6rem', lineHeight: 1.4 }}>
+                                    {item.q}
+                                </h3>
+                                <p style={{ fontSize: '0.95rem', color: 'var(--color-text-muted)', lineHeight: 1.7, margin: 0 }}>
+                                    {item.a}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
             </section>
 
             {/* ═══ Catalog Section ═══ */}
