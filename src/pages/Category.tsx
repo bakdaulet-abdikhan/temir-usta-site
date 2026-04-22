@@ -487,33 +487,6 @@ export default function Category({ whatsappNumber = '77056401566' }: { whatsappN
                 </div>
             </section>
 
-            {/* Tier Content Description */}
-            <section style={{ backgroundColor: '#fff', padding: '3rem 0 2rem' }}>
-                <div className="container" style={{ maxWidth: '900px', margin: '0 auto' }}>
-                    <h2 style={{ fontSize: 'clamp(1.4rem, 2.5vw, 1.9rem)', color: 'var(--color-text-dark)', marginBottom: '1.5rem', letterSpacing: '-0.02em', lineHeight: 1.25 }}>
-                        {tierDesc.contentHeading}
-                    </h2>
-                    <div className="tier-content-grid">
-                        <div>
-                            <p style={{ color: 'var(--color-text-muted)', lineHeight: 1.8, marginBottom: '1rem', fontSize: '0.95rem' }}>{tierDesc.contentP1}</p>
-                            <p style={{ color: 'var(--color-text-muted)', lineHeight: 1.8, fontSize: '0.95rem' }}>{tierDesc.contentP2}</p>
-                        </div>
-                        <div>
-                            <p style={{ color: 'var(--color-text-muted)', lineHeight: 1.8, marginBottom: '1.25rem', fontSize: '0.95rem' }}>{tierDesc.contentP3}</p>
-                            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
-                                {tierDesc.contentHighlights.map((h: string, i: number) => (
-                                    <li key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--color-text-dark)', fontSize: '0.9rem', fontWeight: 500 }}>
-                                        <div style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: 'var(--color-accent)', flexShrink: 0 }} />
-                                        {h}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <style>{`.tier-content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; } @media(max-width:700px){.tier-content-grid{grid-template-columns:1fr;}}`}</style>
-            </section>
-
             {/* Gates Grid */}
             <section style={{ backgroundColor: 'var(--color-surface-light)', padding: '3rem 0 5rem 0' }}>
                 <div className="container">
@@ -607,6 +580,9 @@ export default function Category({ whatsappNumber = '77056401566' }: { whatsappN
                 `}</style>
             </section>
 
+            {/* Collapsible Tier Info */}
+            <TierInfoCollapsible tierDesc={tierDesc} />
+
             {/* Zoom Modal */}
             {zoomedGate && (
                 <ZoomModal
@@ -617,5 +593,47 @@ export default function Category({ whatsappNumber = '77056401566' }: { whatsappN
                 />
             )}
         </div>
+    );
+}
+
+function TierInfoCollapsible({ tierDesc }: { tierDesc: { contentHeading: string; contentP1: string; contentP2: string; contentP3: string; contentHighlights: string[] } }) {
+    const [open, setOpen] = useState(false);
+    return (
+        <section style={{ backgroundColor: 'var(--color-surface-light)', borderTop: '1px solid var(--color-border-light)' }}>
+            <div className="container" style={{ maxWidth: '900px', margin: '0 auto', padding: '0 1.5rem' }}>
+                <button
+                    onClick={() => setOpen(o => !o)}
+                    style={{
+                        width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                        padding: '1.4rem 0', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', gap: '1rem',
+                    }}
+                >
+                    <span style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--color-text-dark)' }}>{tierDesc.contentHeading}</span>
+                    <span style={{ fontSize: '1.2rem', color: 'var(--color-accent)', flexShrink: 0, transition: 'transform 0.25s', transform: open ? 'rotate(45deg)' : 'rotate(0deg)', display: 'inline-block' }}>+</span>
+                </button>
+                {open && (
+                    <div style={{ paddingBottom: '2.5rem' }}>
+                        <div className="tier-content-grid">
+                            <div>
+                                <p style={{ color: 'var(--color-text-muted)', lineHeight: 1.8, marginBottom: '1rem', fontSize: '0.92rem' }}>{tierDesc.contentP1}</p>
+                                <p style={{ color: 'var(--color-text-muted)', lineHeight: 1.8, fontSize: '0.92rem' }}>{tierDesc.contentP2}</p>
+                            </div>
+                            <div>
+                                <p style={{ color: 'var(--color-text-muted)', lineHeight: 1.8, marginBottom: '1.25rem', fontSize: '0.92rem' }}>{tierDesc.contentP3}</p>
+                                <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+                                    {tierDesc.contentHighlights.map((h: string, i: number) => (
+                                        <li key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--color-text-dark)', fontSize: '0.88rem', fontWeight: 500 }}>
+                                            <div style={{ width: '5px', height: '5px', borderRadius: '50%', backgroundColor: 'var(--color-accent)', flexShrink: 0 }} />
+                                            {h}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        </div>
+                        <style>{`.tier-content-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;}@media(max-width:700px){.tier-content-grid{grid-template-columns:1fr;}}`}</style>
+                    </div>
+                )}
+            </div>
+        </section>
     );
 }

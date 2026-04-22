@@ -362,31 +362,6 @@ export default function Home() {
                 `}</style>
             </section>
 
-            {/* ═══ FAQ Section ═══ */}
-            <section style={{ padding: '6rem 0', backgroundColor: 'var(--color-surface-light)' }}>
-                <div className="container">
-                    <ScrollReveal>
-                        <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
-                            <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', color: 'var(--color-text-dark)', letterSpacing: '-0.02em', lineHeight: 1.15 }}>
-                                {tx.faq.heading}
-                            </h2>
-                        </div>
-                    </ScrollReveal>
-                    <div style={{ maxWidth: '800px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '0' }}>
-                        {tx.faq.items.map((item, i) => (
-                            <div key={i} style={{ borderBottom: '1px solid var(--color-border-light)', padding: '1.5rem 0' }}>
-                                <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--color-text-dark)', marginBottom: '0.6rem', lineHeight: 1.4 }}>
-                                    {item.q}
-                                </h3>
-                                <p style={{ fontSize: '0.95rem', color: 'var(--color-text-muted)', lineHeight: 1.7, margin: 0 }}>
-                                    {item.a}
-                                </p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
             {/* ═══ Catalog Section ═══ */}
             <section id="catalog" style={{ padding: '8rem 0', backgroundColor: 'var(--color-bg-light)' }}>
                 <div className="container">
@@ -497,7 +472,44 @@ export default function Home() {
                 </div>
             </section>
 
+            {/* ═══ FAQ Section ═══ */}
+            <FAQSection heading={tx.faq.heading} items={tx.faq.items} />
 
         </div>
+    );
+}
+
+function FAQSection({ heading, items }: { heading: string; items: { q: string; a: string }[] }) {
+    const [openIndex, setOpenIndex] = useState<number | null>(null);
+    return (
+        <section style={{ padding: '5rem 0', backgroundColor: 'var(--color-bg-light)', borderTop: '1px solid var(--color-border-light)' }}>
+            <div className="container">
+                <h2 style={{ fontSize: 'clamp(1.6rem, 3vw, 2.2rem)', color: 'var(--color-text-dark)', marginBottom: '2rem', letterSpacing: '-0.02em' }}>
+                    {heading}
+                </h2>
+                <div style={{ maxWidth: '800px', display: 'flex', flexDirection: 'column' }}>
+                    {items.map((item, i) => (
+                        <div key={i} style={{ borderBottom: '1px solid var(--color-border-light)' }}>
+                            <button
+                                onClick={() => setOpenIndex(openIndex === i ? null : i)}
+                                style={{
+                                    width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                                    padding: '1.25rem 0', background: 'none', border: 'none', cursor: 'pointer',
+                                    textAlign: 'left', gap: '1rem',
+                                }}
+                            >
+                                <span style={{ fontSize: '0.97rem', fontWeight: 600, color: 'var(--color-text-dark)', lineHeight: 1.4 }}>{item.q}</span>
+                                <span style={{ fontSize: '1.2rem', color: 'var(--color-accent)', flexShrink: 0, transition: 'transform 0.25s', transform: openIndex === i ? 'rotate(45deg)' : 'rotate(0deg)', display: 'inline-block' }}>+</span>
+                            </button>
+                            {openIndex === i && (
+                                <p style={{ fontSize: '0.92rem', color: 'var(--color-text-muted)', lineHeight: 1.75, margin: '0 0 1.25rem', paddingRight: '2rem' }}>
+                                    {item.a}
+                                </p>
+                            )}
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
     );
 }
