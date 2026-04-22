@@ -65,7 +65,7 @@ export default function Header() {
             }}>
                 <Link to={langPath('/')} style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
                     <span style={{ fontFamily: 'var(--font-serif)', fontSize: '1.35rem', fontWeight: 700, letterSpacing: '0.5px', color: '#fff' }}>
-                        TEMIR ÚSTA
+                        TEMIR USTA
                     </span>
                 </Link>
 

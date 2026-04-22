@@ -59,18 +59,18 @@ export default function Footer() {
                         <div>
                             <div style={{ marginBottom: '1.25rem' }}>
                                 <span style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', fontWeight: 700, color: '#fff' }}>
-                                    TEMIR ÚSTA
+                                    TEMIR USTA
                                 </span>
                             </div>
                             <p style={{ color: 'rgba(255,255,255,0.5)', lineHeight: 1.7, fontSize: '0.9rem', marginBottom: '1.5rem' }}>
                                 {tx.brandDesc}
                             </p>
-                            <a href="https://www.instagram.com/temir_usta_kz" target="_blank" rel="noopener noreferrer"
+                            <a href="https://www.instagram.com/temirusta.kz" target="_blank" rel="noopener noreferrer"
                                 style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: 'rgba(255,255,255,0.6)', fontSize: '0.875rem', transition: 'color 0.25s', opacity: 1 }}
                                 onMouseEnter={e => (e.currentTarget.style.color = 'var(--color-accent)')}
                                 onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.6)')}
                             >
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg> @temir_usta_kz
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg> @temirusta.kz
                             </a>
                         </div>
 
@@ -92,13 +92,19 @@ export default function Footer() {
                         <div>
                             <h4 style={{ fontSize: '0.8rem', fontFamily: 'var(--font-sans)', fontWeight: 600, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)', marginBottom: '1.25rem' }}>{tx.contactTitle}</h4>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                                <a href="tel:+77273122530" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'rgba(255,255,255,0.55)', fontSize: '0.9rem', transition: 'color 0.2s', opacity: 1 }}
+                                    onMouseEnter={e => (e.currentTarget.style.color = '#fff')}
+                                    onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.55)')}
+                                >
+                                    <Phone size={15} /> +7 (727) 312-25-30
+                                </a>
                                 <a href="tel:+77056401566" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'rgba(255,255,255,0.55)', fontSize: '0.9rem', transition: 'color 0.2s', opacity: 1 }}
                                     onMouseEnter={e => (e.currentTarget.style.color = '#fff')}
                                     onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.55)')}
                                 >
                                     <Phone size={15} /> +7 (705) 640-15-66
                                 </a>
-                                <a href="https://wa.me/77056401566" target="_blank" rel="noopener noreferrer"
+                                <a href="https://wa.me/77273122530" target="_blank" rel="noopener noreferrer"
                                     style={{ display: 'inline-flex', alignItems: 'center', gap: '0.6rem', color: 'rgba(255,255,255,0.55)', fontSize: '0.9rem', transition: 'color 0.2s', opacity: 1 }}
                                     onMouseEnter={e => (e.currentTarget.style.color = '#25D366')}
                                     onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.55)')}
