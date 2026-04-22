@@ -146,17 +146,17 @@ export default function Footer() {
 
             {/* ── Huge Brand Name ── */}
             <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', overflow: 'hidden' }}>
-                <div className="container">
+                <div className="container" style={{ overflow: 'hidden' }}>
                     <p style={{
                         margin: 0,
-                        fontSize: 'min(calc((100vw - 3rem) / 5.2), 228px)',
+                        fontSize: 'min(calc((100vw - 3rem) / 5.5), 218px)',
                         fontFamily: 'var(--font-serif)',
                         fontWeight: 700,
                         letterSpacing: '-0.02em',
-                        lineHeight: 0.85,
+                        lineHeight: 1,
                         whiteSpace: 'nowrap',
                         textAlign: 'center',
-                        padding: '0.5rem 0 0',
+                        padding: '0.08em 0 0',
                         background: 'linear-gradient(to bottom, rgba(255,255,255,0.12), rgba(255,255,255,0.02))',
                         WebkitBackgroundClip: 'text',
                         WebkitTextFillColor: 'transparent',
