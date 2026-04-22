@@ -63,7 +63,8 @@ export default function Header() {
                 alignItems: 'center',
                 height: '80px',
             }}>
-                <Link to={langPath('/')} style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+                <Link to={langPath('/')} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none' }}>
+                    <img src="/logo-temir-usta-T.svg" alt="" style={{ height: '1.3em', width: 'auto', filter: 'invert(1)' }} />
                     <span style={{ fontFamily: 'var(--font-serif)', fontSize: '1.35rem', fontWeight: 700, letterSpacing: '0.5px', color: '#fff' }}>
                         TEMIR USTA
                     </span>

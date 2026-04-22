@@ -57,7 +57,8 @@ export default function Footer() {
 
                         {/* Brand */}
                         <div>
-                            <div style={{ marginBottom: '1.25rem' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.25rem' }}>
+                                <img src="/logo-temir-usta-T.svg" alt="" style={{ height: '1.3em', width: 'auto', filter: 'invert(1)' }} />
                                 <span style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', fontWeight: 700, color: '#fff' }}>
                                     TEMIR USTA
                                 </span>
@@ -148,7 +149,7 @@ export default function Footer() {
                 <div className="container">
                     <p style={{
                         margin: 0,
-                        fontSize: 'min(calc((100vw - 3rem) / 6.5), 190px)',
+                        fontSize: 'min(calc((100vw - 3rem) / 5.2), 228px)',
                         fontFamily: 'var(--font-serif)',
                         fontWeight: 700,
                         letterSpacing: '-0.02em',
