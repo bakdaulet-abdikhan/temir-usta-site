@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const WHATSAPP_URL = `https://wa.me/77273122530?text=${encodeURIComponent('Сәлем! Қақпа туралы консультация алғым келеді.')}`;
+const WHATSAPP_URL = `https://wa.me/77273122530?text=${encodeURIComponent('Сәлеметсіз бе! TEMIR USTA-дан қақпа алғым келген еді..')}`;
 
 const r2Img = (id: string) => `https://pub-45c64cad9ebf4f4f8e48e787f035d2f3.r2.dev/${id.split('-')[0]}/${id}.webp`;
 
